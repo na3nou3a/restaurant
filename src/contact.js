@@ -1,9 +1,5 @@
-export const navContactContent = `
-  <a id="home" href="#">Home</a>
-  <a id="menu" href="#">Menu</a>
-  <a class="active" id="contact" href="#">Contact</a>`;
-
-export const mainContactContent = `<form action="">
+export const contact = () => `
+<form id='form'>
       <legend>Contact Us</legend>
       <label for="name">Name</label>
 <input type="text" name="name" id="name" placeholder="your Name">
@@ -12,6 +8,6 @@ export const mainContactContent = `<form action="">
 <label for="description">Message</label>
 <textarea name="description" id="description" cols="30" rows="10"></textarea>
 
-<input type="submit" class="btn" value="Submit">
+<button type="submit" class="btn">Submit</button>
       
     </form>`;

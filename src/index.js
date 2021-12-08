@@ -1,49 +1,68 @@
-import { navHomeContent, mainHomeContent } from "./home";
-import { navMenuContent, mainMenuContent } from "./menu";
-import { navContactContent, mainContactContent } from "./contact";
-const body = document.getElementsByTagName("body")[0];
-const nav = document.createElement("nav");
-const main = document.createElement("main");
-const footer = document.createElement("footer");
+import { navigation } from './navigation.js';
+import { footer } from './footer.js';
+import { home } from './home.js';
+import { menu } from './menu.js';
+import { contact } from './contact.js';
 
-footer.innerHTML = `<p>&copy; 2021</p>`;
-body.prepend(footer);
-body.prepend(main);
-body.prepend(nav);
+let currentPage = '';
+const body = document.getElementsByTagName('body')[0];
+const main = document.createElement('main');
 
-run("home");
-
-function run(what) {
-  if (what === "home") {
-    nav.innerHTML = navHomeContent;
-    main.innerHTML = mainHomeContent;
-  } else if (what === "menu") {
-    nav.innerHTML = navMenuContent;
-    main.innerHTML = mainMenuContent;
-  } else if (what === "contact") {
-    nav.innerHTML = navContactContent;
-    main.innerHTML = mainContactContent;
-  }
+function runHomePage() {
+  currentPage = 'home';
+  body.innerHTML = '';
+  body.prepend(footer());
+  main.innerHTML = home();
+  body.prepend(main);
+  body.prepend(navigation('home'));
   handleLinks();
 }
 
+function runMenuPage() {
+  currentPage = 'menu';
+  body.innerHTML = '';
+  body.prepend(footer());
+  main.innerHTML = menu();
+  body.prepend(main);
+  body.prepend(navigation('menu'));
+  handleLinks();
+}
 
-function handleLinks() {
-  const homeLink = document.querySelector("#home");
-  const menuLink = document.querySelector("#menu");
-  const contactLink = document.querySelector("#contact");
-  homeLink.addEventListener("click", function (e) {
+function runContactPage() {
+  currentPage = 'contact';
+  body.innerHTML = '';
+  body.prepend(footer());
+  main.innerHTML = contact();
+  body.prepend(main);
+  body.prepend(navigation('contact'));
+  handleLinks();
+  const form = document.getElementById('form');
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    run("home");
-  });
-  menuLink.addEventListener("click", function (e) {
-    e.preventDefault();
-    run("menu");
-  });
-  contactLink.addEventListener("click", function (e) {
-    e.preventDefault();
-    run("contact");
+    form.reset();
+    alert('form submitted!');
   });
 }
 
+function handleLinks() {
+  const homeLink = document.querySelector('#home');
+  const menuLink = document.querySelector('#menu');
+  const contactLink = document.querySelector('#contact');
+  homeLink.addEventListener('click', function (e) {
+    if (currentPage == 'home') return;
+    e.preventDefault();
+    runHomePage('home');
+  });
+  menuLink.addEventListener('click', function (e) {
+    if (currentPage == 'menu') return;
+    e.preventDefault();
+    runMenuPage('menu');
+  });
+  contactLink.addEventListener('click', function (e) {
+    if (currentPage == 'contact') return;
+    e.preventDefault();
+    runContactPage('contact');
+  });
+}
 
+runHomePage();
